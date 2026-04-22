@@ -1,0 +1,20 @@
+# Configuration for N=17 containing only one hexagon of type 1
+# Method: Linear Subreduction
+# Solver Runtime: 251.39s (Z3 SMT solver)
+0 -6091
+1 -1
+2 0
+3 -4504
+4 315
+5 109787
+6 -1771
+7 73098
+8 -2
+9 48726
+10 44
+11 -276
+12 22
+13 -13
+14 1881
+15 2339
+16 -18

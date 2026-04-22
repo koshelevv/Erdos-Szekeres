@@ -1,0 +1,13 @@
+#const sb=off.
+#const xgrid=1.
+
+pt(0..n-1).
+
+x(N,N) :- pt(N), xgrid=1.
+
+x(0,n/2) :- xgrid>1, n\2=1.
+x(-(xgrid**(n/2-N-1)),N) :- pt(N), N<n/2, xgrid>1.
+x(  xgrid**(N-(n-1)/2-1), N) :- pt(N), N>(n-1)/2, xgrid>1.
+
+&sum { KA*y(XA); KB*y(XB); KC*y(XC) } >=  1 :- l(A,B,C,1),  x(XA,A), x(XB,B), x(XC,C),  KA=XC-XB, KB=XA-XC, KC=XB-XA,  xgrid>0.
+&sum { KA*y(XA); KB*y(XB); KC*y(XC) } <= -1 :- l(A,B,C,-1), x(XA,A), x(XB,B), x(XC,C),  KA=XC-XB, KB=XA-XC, KC=XB-XA,  xgrid>0.

@@ -1,0 +1,1 @@
+sed ':a;N;s/)\n (/) (/g;ba' | awk '/^\(\(/ {gsub(/\(x[0-9]+ /,""); gsub(/\(y[0-9]+ /,""); gsub(/\(- /,"-"); gsub(/[()]/,""); x=$1; y=$2; c=0; for(i=3;i<=NF;i++) {if($i=="true"||$i=="false") {c++; if($i=="false") {print x,y,sprintf("%c",64+c); break}}}}'

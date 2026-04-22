@@ -1,0 +1,22 @@
+# All Points:  configuration for N=18 containing minimal number of hexagons (2), both of type 0
+# Points 1-17: configuration for N=17 containing only one hexagon of type 0
+# Points 2-17: Erdos-Szekeres configuration for N=16 without convex hexagons
+# Method: Manual
+0 0
+9 1
+20 2
+30 2
+41 1
+50 0
+60 48
+65 49
+70 48
+80 52
+85 51
+90 52
+0 99
+9 98
+20 97
+30 97
+41 98
+50 99

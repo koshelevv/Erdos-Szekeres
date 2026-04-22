@@ -1,0 +1,22 @@
+# All Points:  configuration for N=18 containing minimal number of hexagons (2): one of type 0, another one of type 1
+# Points 1-17: configuration for N=17 containing only one hexagon of type hex 0
+# Points 2-18: configuration for N=17 containing only one hexagon of type hex 1
+# Method: clingo-lpx, CPU runtime: 688385.013s
+-65536 10723797
+-16384 -57199845
+-4096 645370
+-1024 141447
+-256 35229
+-64 9929
+-16 -3120
+-4 -4840
+-1 -1
+1 -314
+4 -49865
+16 -8019
+64 -3001
+256 -77069
+1024 -159978
+4096 -662298
+16384 -2623798
+65536 -10478157

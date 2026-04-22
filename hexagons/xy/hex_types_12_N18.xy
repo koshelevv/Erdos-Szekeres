@@ -1,0 +1,21 @@
+# Configuration for N=18 containing only types 1-2
+# Method: Linear Subreduction
+# Solver Runtime: 12931.50s (Z3 SMT solver)
+0 1905
+1 1419
+2 937
+3 -13196
+4 -12255
+5 -1422
+6 -1383
+7 -1341
+8 -38634
+9 0
+10 -6802
+11 -3412
+12 -78970
+13 -4077
+14 -99211
+15 -1268
+16 -971
+17 0
