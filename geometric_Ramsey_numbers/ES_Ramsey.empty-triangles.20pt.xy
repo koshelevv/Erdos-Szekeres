@@ -1,0 +1,29 @@
+% Launch this logic program to obtain 20 points edge coloring for R_ec(3,3)
+
+#include "ES_Ramsey.lp".
+#include "xy2signotope.lp".
+
+#const n=20.
+#const tr1=0.
+#const tr2=0.
+
+xy(1,1,1862).
+xy(2,2,1749).
+xy(3,3,1656).
+xy(4,4,1566).
+xy(5,5,488).
+xy(6,6,-2089).
+xy(7,7,-2633).
+xy(8,8,391).
+xy(9,9,-21246).
+xy(10,10,-5834).
+xy(11,11,-6903).
+xy(12,12,267).
+xy(13,13,-80).
+xy(14,14,202).
+xy(15,15,65).
+xy(16,16,-69).
+xy(17,17,-68).
+xy(18,18,39).
+xy(19,19,0).
+xy(20,20,145).

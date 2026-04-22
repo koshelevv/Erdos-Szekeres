@@ -1,0 +1,35 @@
+% Launch this logic program to obtain 24 points edge coloring for R_c(3,5)
+
+#include "ES_Ramsey.lp".
+#include "xy2signotope.lp".
+
+#const n=24.
+#const tr1=99.
+#const pent1=0.
+
+xy(1,1,-184).
+xy(2,2,-5).
+xy(3,3,71).
+xy(4,4,19085).
+xy(5,5,45983).
+xy(6,6,588939).
+xy(7,7,0).
+xy(8,8,-176).
+xy(9,9,153581).
+xy(10,10,8474).
+xy(11,11,7536).
+xy(12,12,-281760).
+xy(13,13,5655).
+xy(14,14,4707).
+xy(15,15,-717104).
+xy(16,16,3346).
+xy(17,17,2669).
+xy(18,18,1995).
+xy(19,19,1325).
+xy(20,20,-774).
+xy(21,21,-12).
+xy(22,22,-2886).
+xy(23,23,12).
+xy(24,24,22).
+
+#show xy/3.

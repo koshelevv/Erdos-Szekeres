@@ -1,0 +1,17 @@
+% Launch this logic program to obtain 10 points edge coloring for R_c(3,4)
+
+#include "ES_Ramsey.lp".
+#include "xy2signotope.lp".
+
+xy(1,1,0).
+xy(2,2,0).
+xy(3,3,-211).
+xy(4,4,-421).
+xy(5,5,-671).
+xy(6,6,-839).
+xy(7,7,-1044).
+xy(8,8,-1248).
+xy(9,9,-1458).
+xy(10,10,-1655).
+
+#show xy/3.
