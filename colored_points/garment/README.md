@@ -23,10 +23,10 @@ The solver supports the following structures as defined in the literature:
 ### Finding Coordinates (Linear Subreduction Method)
 To find a valid point set realization for a counterexample:
 ```bash
-clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=bowtie -c red2=skirt -c blue1=bowtie -c blue2=skirt -c n=13 > bowtie-skirt-13pt.xy
-clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c red2=pant -c blue1=necklace -c blue2=pant -c n=12 > necklace-pant-12pt.xy
-clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c red2=skirt -c blue1=necklace -c blue2=skirt -c n=14 > necklace-skirt-14pt.xy
-clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c blue1=necklace -c n=15 > necklace-15pt.xy
+clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=bowtie -c red2=skirt -c blue1=bowtie -c blue2=skirt -c n=13 -c xgrid=2 > bowtie-skirt-13pt.xgrid2.lpx
+clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c red2=pant -c blue1=necklace -c blue2=pant -c n=12 > necklace-pant-12pt.lpx
+clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c red2=skirt -c blue1=necklace -c blue2=skirt -c n=14 > necklace-skirt-14pt.lpx
+clingo-lpx lpx ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c blue1=necklace -c n=15 > necklace-15pt.lpx
 ```
 
 ### Proving Upper Bound (ASP)
