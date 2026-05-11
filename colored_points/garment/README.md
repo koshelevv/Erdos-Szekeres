@@ -40,13 +40,13 @@ clingo ES_garment.lp --configuration=frumpy -V3 -s -c red1=necklace -c blue1=nec
 
 ## Results
 The solver allows for precise determination of garment numbers:
-- $\mathcal G(\textrm{bowtie}) = $\mathcal G(\textrm{bowtie}\vee \textrm{skirt})=14$
+- $\mathcal G(\textrm{bowtie}) = \mathcal G(\textrm{bowtie}\vee \textrm{skirt})=14$
 - $\mathcal G(\textrm{necklace}\vee \textrm{pant})=13$
 - $\mathcal G(\textrm{necklace}\vee \textrm{skirt})=15$
 - $\mathcal G(\textrm{necklace})=16$
 
 ## References
 
-- **Garment Numbers:** O. Aichholzer et al., *"Garment numbers of bi-colored point sets in the plane"* (2026). [arXiv:2603.05339](https://arxiv.org)
-- **Methodology:** V. Koshelev, *"Combinatorial Geometry of Erdos--Szekeres Type Problems: SAT/ASP Modeling and Linear Subreduction"* (2026). [arXiv:2604.20120](https://arxiv.org)
-- **Authors' Code Reference:** [N-Coder/garment-numbers-colored-point-sets](https://github.com)
+- **Garment Numbers:** Oswin Aichholzer et al., *"Garment numbers of bi-colored point sets in the plane"* (2026). [arXiv:2603.05339](https://arxiv.org/pdf/2603.05339)
+- **Methodology:** Vitalii Koshelev, *"Combinatorial Geometry of Erdos--Szekeres Type Problems: SAT/ASP Modeling and Linear Subreduction"* (2026). [arXiv:2604.20120](https://arxiv.org/pdf/2604.20120)
+- **Authors' Code Reference:** [N-Coder/garment-numbers-colored-point-sets](https://github.com/N-Coder/garment-numbers-colored-point-sets)
