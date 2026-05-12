@@ -29,6 +29,3 @@ tr(A,B,C,N) :- pt(A),pt(B),pt(C), A<B,B<C, {i(A,B,C,X)}<=N, N=0..I, ins(_,_,I), 
 
 #show l/4.
 #show c/3.
-
-%l(A,B,C,1)  :- A<B,B<C,C<n, xy(A,X1,Y1), xy(B,X2,Y2), xy(C,X3,Y3), (X1+X2)*(Y1-Y2)+(X2+X3)*(Y2-Y3)+(X3+X1)*(Y3-Y1) > 0.
-%l(A,B,C,-1) :- A<B,B<C,C<n, xy(A,X1,Y1), xy(B,X2,Y2), xy(C,X3,Y3), (X1+X2)*(Y1-Y2)+(X2+X3)*(Y2-Y3)+(X3+X1)*(Y3-Y1) < 0.
