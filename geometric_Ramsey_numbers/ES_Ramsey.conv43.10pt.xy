@@ -5,7 +5,7 @@
 
 #const n=10.
 #const tr1=99.
-#const four2=99.
+#const quad2=99.
 
 xy(1,0).
 xy(2,0).
