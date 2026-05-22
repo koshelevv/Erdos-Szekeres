@@ -1,4 +1,4 @@
-pt(0..n-1).
+pt(1..n).
 
 % Knuth's axioms for monotone signotopes (order types)
 1{l(A,B,C,R): R=(-1;1)}1 :- pt(A),pt(B),pt(C), A<B,B<C.

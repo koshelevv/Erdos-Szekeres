@@ -1,4 +1,4 @@
-pt(0..n-1).
+pt(1..n).
 
 %  --- SELECT TARGET POLYGONS ---
 %  Format: ins(Type, ColorID, MaxInteriorPoints)
@@ -24,7 +24,7 @@ ins(pr,p1,pr1;
 :- l(A,B,C,R), l(A,B,D,-R), l(B,C,D,R).
 :- l(A,B,D,R), l(A,C,D,-R), l(B,C,D,R).
 %  Symmetry breaking: fix orientation of the first triplets to avoid rotated solutions
-:- l(0,B,C,-1), sb!=off.
+:- l(1,B,C,-1), sb!=off.
 
 %  --- INTERIOR POINTS LOGIC ---
 %  Define if point X is inside triangle (A,B,C) based on relative orientations
