@@ -70,7 +70,7 @@ is_even = (n % 2 == 0)
 if xgrid_val == 0:
     # Intentional non-determinism for parallel instances scaling.
     # Avoid adding random.seed() here to let workers explore different search spaces.
-    s_v = sorted(random.sample(range(n * 10), n))
+    s_v = sorted(random.sample(range(n * n), n))
     x_coords = {i: val for i, val in enumerate(s_v)}
 elif xgrid_val == 1:
     x_coords = {i: i for i in range(n)}
@@ -127,28 +127,26 @@ for c_idx, (c_type, limit) in enumerate(raw_params):
 
     elif c_type == 'tr':
         for (a,b,c) in combinations(N, 3):
-            p_vars = [x + 1 + off for x in [a,b,c]]
+            p_vars = [x + 1 + off for x in (a,b,c)]
             add_cons(p_vars + [tr[(a,b,c,limit)]], [])
 
     elif c_type in ['cv', 'nc', 'is']:
-        is_is = (c_type == 'is')
-        is_nc = (c_type == 'nc')
         for (a,b,c,d) in combinations(N, 4):
-            p_vars = [x + 1 + off for x in [a,b,c,d]]
-            for q1 in range(limit + 1):
-                q2 = limit - q1
-                add_cons(p_vars + [tr[(a,b,c,q1)], tr[(a,c,d,q2)]], [l[(a,b,c)], l[(b,c,d)]])
-                add_cons(p_vars + [tr[(a,b,c,q1)], tr[(b,c,d,q2)]], [l[(a,b,d)], -l[(a,c,d)]])
+            p_vars = [x + 1 + off for x in (a,b,c,d)]
+            for i1 in range(limit + 1):
+                i2 = limit - i1
+                add_cons(p_vars + [tr[(a,b,c,i1)], tr[(a,c,d,i2)]], [l[(a,b,c)],  l[(b,c,d)]])
+                add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)]], [l[(a,b,d)], -l[(a,c,d)]])
 
-                if is_nc:
-                    add_cons(p_vars + [tr[(a,b,c,q1)], tr[(a,b,d,q2)]], [l[(a,b,d)], -l[(a,b,c)]])
-                    add_cons(p_vars + [tr[(a,b,d,q1)], tr[(b,c,d,q2)]], [l[(a,b,d)], -l[(a,b,c)]])
-                    add_cons(p_vars + [tr[(a,b,c,q1)], tr[(b,c,d,q2)]], [l[(a,b,d)], -l[(a,b,c)]])
-                    add_cons(p_vars + [tr[(a,b,c,q1)], tr[(a,c,d,q2)]], [l[(a,c,d)], -l[(b,c,d)]])
-                    add_cons(p_vars + [tr[(a,b,c,q1)], tr[(b,c,d,q2)]], [l[(a,c,d)], -l[(b,c,d)]])
-                    add_cons(p_vars + [tr[(a,c,d,q1)], tr[(b,c,d,q2)]], [l[(a,c,d)], -l[(b,c,d)]])
+                if c_type == 'nc':
+                    add_cons(p_vars + [tr[(a,b,c,i1)], tr[(a,b,d,i2)]], [l[(a,b,d)], -l[(a,b,c)]])
+                    add_cons(p_vars + [tr[(a,b,d,i1)], tr[(b,c,d,i2)]], [l[(a,b,d)], -l[(a,b,c)]])
+                    add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)]], [l[(a,b,d)], -l[(a,b,c)]])
+                    add_cons(p_vars + [tr[(a,b,c,i1)], tr[(a,c,d,i2)]], [l[(a,c,d)], -l[(b,c,d)]])
+                    add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)]], [l[(a,c,d)], -l[(b,c,d)]])
+                    add_cons(p_vars + [tr[(a,c,d,i1)], tr[(b,c,d,i2)]], [l[(a,c,d)], -l[(b,c,d)]])
 
-                if is_is:
+                if c_type == 'is':
                     add_cons(p_vars + [tr[(a,c,d,limit+1)]], [l[(a,b,d)], -l[(a,b,c)]])
                     add_cons(p_vars + [tr[(a,b,d,limit+1)]], [l[(a,c,d)], -l[(b,c,d)]])
 
@@ -156,15 +154,15 @@ for c_idx, (c_type, limit) in enumerate(raw_params):
         # 6.1. Alias permutation indices for orientation and density
         # This maps all arbitrary permutations to canonical ordered keys.
         # Required only for pentagons to maintain O(1) dictionary lookups.
-        for (a, b, c) in combinations(N, 3):
+        for (a,b,c) in combinations(N, 3):
             l[(b,c,a)] = l[(c,a,b)] = l[(a,b,c)]
             l[(a,c,b)] = l[(b,a,c)] = l[(c,b,a)] = -l[(a,b,c)]
             for q in Q:
                 tr[(a,c,b,q)] = tr[(b,a,c,q)] = tr[(b,c,a,q)] = tr[(c,a,b,q)] = tr[(c,b,a,q)] = tr[(a,b,c,q)]
 
         # 6.2. Non-convex pentagon constraints generation
-        for (a, b, c, d, e) in permutations(N, 5):
-            p_vars = [x + 1 + off for x in [a,b,c,d,e]]
+        for (a,b,c,d,e) in permutations(N, 5):
+            p_vars = [x + 1 + off for x in (a,b,c,d,e)]
             for i1 in range(limit + 1):
                 for i2 in range(limit - i1 + 1):
                     i3 = limit - i1 - i2
