@@ -35,8 +35,6 @@ l = {}
 ext = {}
 tr = {}
 
-num_vars = 0
-
 def new_var(num = 1):
     global num_vars
     for i in range(num):
@@ -59,9 +57,9 @@ def clause(L):
     else:
         constraints.append(L)
 
+num_vars = 0
 num_vars = new_var(n * num_colors)
 constraints = []
-
 
 # 2. X coordinates calculation (0-based) for SMT
 mid = n // 2
@@ -153,7 +151,7 @@ for c_idx, (c_type, limit) in enumerate(raw_params):
     elif c_type in ['rp', 'sp']:
         # 6.1. Alias permutation indices for orientation and density
         # This maps all arbitrary permutations to canonical ordered keys.
-        # Required only for pentagons to maintain O(1) dictionary lookups.
+        # Required only for pentagons.
         for (a,b,c) in combinations(N, 3):
             l[(b,c,a)] = l[(c,a,b)] = l[(a,b,c)]
             l[(a,c,b)] = l[(b,a,c)] = l[(c,b,a)] = -l[(a,b,c)]
