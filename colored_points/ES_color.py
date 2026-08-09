@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from itertools import combinations
+from itertools import combinations, permutations
 import sys
 import random
 
@@ -152,6 +152,32 @@ for c_idx, (c_type, limit) in enumerate(raw_params):
                     add_cons(p_vars + [tr[(a,c,d,limit+1)]], [l[(a,b,d)], -l[(a,b,c)]])
                     add_cons(p_vars + [tr[(a,b,d,limit+1)]], [l[(a,c,d)], -l[(b,c,d)]])
 
+    elif c_type in ['rp', 'sp']:
+        # 6.1. Alias permutation indices for orientation and density
+        # This maps all arbitrary permutations to canonical ordered keys.
+        # Required only for pentagons to maintain O(1) dictionary lookups.
+        for (a, b, c) in combinations(N, 3):
+            l[(b,c,a)] = l[(c,a,b)] = l[(a,b,c)]
+            l[(a,c,b)] = l[(b,a,c)] = l[(c,b,a)] = -l[(a,b,c)]
+            for q in Q:
+                tr[(a,c,b,q)] = tr[(b,a,c,q)] = tr[(b,c,a,q)] = tr[(c,a,b,q)] = tr[(c,b,a,q)] = tr[(a,b,c,q)]
+
+        # 6.2. Non-convex pentagon constraints generation
+        for (a, b, c, d, e) in permutations(N, 5):
+            p_vars = [x + 1 + off for x in [a,b,c,d,e]]
+            for i1 in range(limit + 1):
+                for i2 in range(limit - i1 + 1):
+                    i3 = limit - i1 - i2
+                    # Relaxed mode: fast filtering but allows some self-intersecting shapes (where abc and cde intersect)
+                    if c_type == 'rp':
+                        add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)], tr[(c,d,e,i3)], l[(a,b,c)], -l[(b,c,d)], l[(c,d,e)]], [])
+                    # Strict mode: structurally strict clauses to guarantee geometric soundness (abc and cde must not intersect)
+                    if c_type == 'sp':
+                        add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)], tr[(c,d,e,i3)], l[(a,b,c)], -l[(b,c,d)], l[(c,d,e)], -l[(a,c,d)]], [])
+                        add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)], tr[(c,d,e,i3)], l[(a,b,c)], -l[(b,c,d)], l[(c,d,e)], -l[(b,c,e)]], [])
+                        add_cons(p_vars + [tr[(a,b,c,i1)], tr[(b,c,d,i2)], tr[(c,d,e,i3)], l[(a,b,c)], -l[(b,c,d)], l[(c,d,e)], l[(a,c,d)], l[(b,c,e)], l[(a,c,e)]], [])
+
+
 # 7. Symmetry breaking
 if sb_enabled:
     for (a,b,c) in combinations(N, 3):
@@ -171,11 +197,11 @@ else:
 
     # Arithmetic-Orientation coupling
     if xgrid_val >= 0:
-        for (a,b,c), k_id in l.items():
+        for (a,b,c) in combinations(N, 3):
             ka, kb, kc = x_coords[c] - x_coords[b], x_coords[a] - x_coords[c], x_coords[b] - x_coords[a]
             sum_expr = f"(+ (* {ka} y{a}) (* {kb} y{b}) (* {kc} y{c}))"
-            print(f"(assert (= k{k_id} (>= {sum_expr} 1)))")
-            print(f"(assert (or k{k_id} (<= {sum_expr} -1)))")
+            print(f"(assert (= k{l[(a,b,c)]} (>= {sum_expr} 1)))")
+            print(f"(assert (or k{l[(a,b,c)]} (<= {sum_expr} -1)))")
 
     print("(check-sat)")
     #print("(set-option :produce-models true)")
