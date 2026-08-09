@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 from itertools import combinations
 import sys
+import random
 
 # 1. Parse parameters
 raw_params = []
 n = 0
 sb_enabled = True
 output_smt2 = False
-xgrid_val = 0
+xgrid_val = -1
 
 for arg in sys.argv[1:]:
     if '=' in arg:
@@ -30,24 +31,48 @@ all_limits = [v for k, v in raw_params]
 all_limits += [v+1 for k, v in raw_params if k == 'is']
 Q = range(max(all_limits) + 1) if all_limits else range(1)
 
-num_vars = n * num_colors
-constraints = []
-
 l = {}
 ext = {}
 tr = {}
 
+num_vars = 0
+
+def new_var(num = 1):
+    global num_vars
+    for i in range(num):
+        num_vars += 1
+        if output_smt2:
+            print(f"(declare-fun k{num_vars} () Bool)")
+    return num_vars
+
 def add_cons(L1, L2):
-    # This logic is sacred: it produces exactly 1 or 2 clauses
-    constraints.append(L1 + L2)
-    if L2 != []:
-        constraints.append(L1 + [-x for x in L2])
+    # Generates 1 or 2 clauses based on conditional geometric constraints
+    clause(L1 + L2)
+    if L2:
+        clause(L1 + [-x for x in L2])
+
+def clause(L):
+    # Prints a single SAT clause for SMT2 or appends it to constraints
+    if output_smt2:
+        lits = [f"k{v}" if v > 0 else f"(not k{-v})" for v in L]
+        print(f"(assert (or {' '.join(lits)}))")
+    else:
+        constraints.append(L)
+
+num_vars = new_var(n * num_colors)
+constraints = []
+
 
 # 2. X coordinates calculation (0-based) for SMT
 mid = n // 2
 is_even = (n % 2 == 0)
 
-if xgrid_val == 1:
+if xgrid_val == 0:
+    # Intentional non-determinism for parallel instances scaling.
+    # Avoid adding random.seed() here to let workers explore different search spaces.
+    s_v = sorted(random.sample(range(n * 10), n))
+    x_coords = {i: val for i, val in enumerate(s_v)}
+elif xgrid_val == 1:
     x_coords = {i: i for i in range(n)}
 else:
     x_coords = {
@@ -59,15 +84,14 @@ else:
 # 3. Point-Color Assignments (One-Hot)
 for i in N:
     point_vars = [i + 1 + (c * n) for c in range(num_colors)]
-    constraints.append([-v for v in point_vars])
+    add_cons([-v for v in point_vars], [])
     if num_colors > 1:
         for v1, v2 in combinations(point_vars, 2):
-            constraints.append([v1, v2])
+            add_cons([v1, v2], [])
 
 # 4. Orientation variables
 for (a,b,c) in combinations(N, 3):
-    num_vars += 1
-    l[(a,b,c)] = num_vars
+    l[(a,b,c)] = new_var()
 
 # Geometric axioms
 for (a,b,c,d) in combinations(N, 4):
@@ -78,18 +102,15 @@ for (a,b,c,d) in combinations(N, 4):
 
 # External point logic
 for (a,b,c,d) in combinations(N, 4):
-    num_vars += 1
-    ext[(a,b,d,c)] = num_vars
+    ext[(a,b,d,c)] = new_var()
     add_cons([-ext[(a,b,d,c)]], [l[(b,c,d)], l[(a,c,d)]])
-    num_vars += 1
-    ext[(a,c,d,b)] = num_vars
+    ext[(a,c,d,b)] = new_var()
     add_cons([-ext[(a,c,d,b)]], [l[(a,b,c)], l[(a,b,d)]])
 
 # 5. Density variables (tr)
 for (a,b,c) in combinations(N, 3):
     for q in Q:
-        num_vars += 1
-        tr[(a,b,c,q)] = num_vars
+        tr[(a,b,c,q)] = new_var()
         PT = [pt for pt in range(a + 1, c) if pt != b]
         if len(PT) < q:
             add_cons([-tr[(a,b,c,q)]], [])
@@ -144,23 +165,17 @@ if not output_smt2:
         sys.stdout.write(" ".join(map(str, c)) + " 0\n")
 else:
     # Variables and Constants declarations
-    for i in range(1, num_vars + 1): print(f"(declare-fun k{i} () Bool)")
     for i in range(n):
         print(f"(define-fun x{i} () Int {x_coords[i]})")
         print(f"(declare-fun y{i} () Int)")
 
     # Arithmetic-Orientation coupling
-    if xgrid_val > 0:
+    if xgrid_val >= 0:
         for (a,b,c), k_id in l.items():
             ka, kb, kc = x_coords[c] - x_coords[b], x_coords[a] - x_coords[c], x_coords[b] - x_coords[a]
             sum_expr = f"(+ (* {ka} y{a}) (* {kb} y{b}) (* {kc} y{c}))"
             print(f"(assert (= k{k_id} (>= {sum_expr} 1)))")
             print(f"(assert (or k{k_id} (<= {sum_expr} -1)))")
-
-    # Boolean Clauses
-    for c in constraints:
-        lits = [f"k{v}" if v > 0 else f"(not k{-v})" for v in c]
-        print(f"(assert (or {' '.join(lits)}))")
 
     print("(check-sat)")
     #print("(set-option :produce-models true)")
