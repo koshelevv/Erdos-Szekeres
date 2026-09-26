@@ -1,0 +1,54 @@
+clingo version 5.8.0 (6d1efb6)
+Reading from imba.lp
+Reading      : 0.216s
+Preprocessing: 0.096s
+Sat-Prepro   :Sat-Prepro   : S:        0/28390   Sat-Prepro   : S:     8192/28390   Sat-Prepro   : S:    16384/28390   Sat-Prepro   : S:    24576/28390   Sat-Prepro   : B:        0/68      Sat-Prepro   : E:        0/68      Sat-Prepro   : B:        0/65      Sat-Prepro   : 0.048s (ClRemoved: 6936 ClAdded: 5040 LitsStr: 199)
+Solving...
+------------------------------------------------------------------------------------------|
+ID:T       Vars           Constraints         State            Limits            Time     |
+       #free/#fixed   #problem/#learnt  #conflicts/ratio #conflict/#learnt                |
+------------------------------------------------------------------------------------------|
+ 0:R|    872/288    |   26864/0       |         0/0.000 |     100/8954      |      0.370s |
+ 0:R|    861/299    |   26482/79      |       100/0.521 |     150/8954      |      0.375s |
+ 0:R|    861/299    |   26482/197     |       251/0.388 |     225/8954      |      0.382s |
+ 0:R|    861/299    |   26482/372     |       476/0.353 |     337/8954      |      0.394s |
+ 0:R|    861/299    |   26482/644     |       814/0.365 |     506/8954      |      0.414s |
+ 0:R|    861/299    |   26482/1079    |      1323/0.380 |     759/8954      |      0.441s |
+ 0:R|    861/299    |   26482/1763    |      2084/0.440 |    1139/8954      |      0.485s |
+ 0:R|    861/299    |   26482/2742    |      3223/0.465 |    1708/8954      |      0.543s |
+ 0:R|    861/299    |   26482/4338    |      4932/0.497 |    2562/8954      |      0.644s |
+ 0:R|    861/299    |   26482/6750    |      7495/0.530 |    3844/9849      |      0.881s |
+ 0:R|    846/314    |   25834/8055    |     11340/0.564 |    5766/10834     |      1.455s |
+ 0:E|    542/618    |   13936/1589    |     12763/0.572 |    5766/10834     |      1.734s |
+------------------------------------------------------------------------------------------|
+UNSATISFIABLE
+
+Models       : 0
+Calls        : 1
+Time         : 1.734s (Solving: 1.36s 1st Model: 0.00s Unsat: 1.36s)
+CPU Time     : 1.030s
+
+Choices      : 22304   
+Conflicts    : 12763    (Analyzed: 12762)
+Restarts     : 10       (Average: 1276.20 Last: 1422 Blocked: 0)
+Problems     : 1        (Average Length: 0.00 Splits: 0)
+Lemmas       : 12762    (Deleted: 0)
+  Binary     : 20       (Ratio:   0.16%)
+  Ternary    : 1023     (Ratio:   8.02%)
+  Conflict   : 12762    (Average Length:   26.9 Ratio: 100.00%) 
+  Loop       : 0        (Average Length:    0.0 Ratio:   0.00%) 
+  Other      : 0        (Average Length:    0.0 Ratio:   0.00%) 
+Backjumps    : 12762    (Average:  1.74 Max:  26 Sum:  22195)
+  Executed   : 12762    (Average:  1.74 Max:  26 Sum:  22195 Ratio: 100.00%)
+  Bounded    : 0        (Average:  0.00 Max:   0 Sum:      0 Ratio:   0.00%)
+
+Rules        : 56977   
+  Choice     : 286     
+Atoms        : 7399    
+Bodies       : 51671   
+  Count      : 662     
+Equivalences : 27662    (Atom=Atom: 5039 Body=Body: 15184 Other: 7439)
+Tight        : Yes
+Variables    : 1228     (Eliminated:   68 Frozen:  874)
+Constraints  : 26864    (Binary:   5.3% Ternary:  93.4% Other:   1.4%)
+

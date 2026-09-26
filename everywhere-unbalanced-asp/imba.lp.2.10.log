@@ -1,0 +1,46 @@
+clingo version 5.8.0 (6d1efb6)
+Reading from imba.lp
+Reading      : 0.046s
+Preprocessing: 0.062s
+Sat-Prepro   :Sat-Prepro   : S:        0/7859    Sat-Prepro   : B:        0/38      Sat-Prepro   : E:        0/38      Sat-Prepro   : B:        0/35      Sat-Prepro   : 0.006s (ClRemoved: 2646 ClAdded: 1898 LitsStr: 59)
+Solving...
+------------------------------------------------------------------------------------------|
+ID:T       Vars           Constraints         State            Limits            Time     |
+       #free/#fixed   #problem/#learnt  #conflicts/ratio #conflict/#learnt                |
+------------------------------------------------------------------------------------------|
+ 0:R|    368/122    |    7279/0       |         0/0.000 |     100/2426      |      0.116s |
+ 0:R|    353/137    |    6902/73      |       100/0.667 |     150/2426      |      0.119s |
+ 0:R|    353/137    |    6902/207     |       250/0.668 |     225/2426      |      0.146s |
+ 0:E|    111/379    |    3198/50      |       473/0.682 |     225/2426      |      0.152s |
+------------------------------------------------------------------------------------------|
+UNSATISFIABLE
+
+Models       : 0
+Calls        : 1
+Time         : 0.152s (Solving: 0.04s 1st Model: 0.00s Unsat: 0.04s)
+CPU Time     : 0.056s
+
+Choices      : 694     
+Conflicts    : 473      (Analyzed: 472)
+Restarts     : 2        (Average: 236.00 Last: 222 Blocked: 0)
+Problems     : 1        (Average Length: 0.00 Splits: 0)
+Lemmas       : 472      (Deleted: 0)
+  Binary     : 20       (Ratio:   4.24%)
+  Ternary    : 55       (Ratio:  11.65%)
+  Conflict   : 472      (Average Length:   14.3 Ratio: 100.00%) 
+  Loop       : 0        (Average Length:    0.0 Ratio:   0.00%) 
+  Other      : 0        (Average Length:    0.0 Ratio:   0.00%) 
+Backjumps    : 472      (Average:  1.45 Max:   8 Sum:    683)
+  Executed   : 472      (Average:  1.45 Max:   8 Sum:    683 Ratio: 100.00%)
+  Bounded    : 0        (Average:  0.00 Max:   0 Sum:      0 Ratio:   0.00%)
+
+Rules        : 17556   
+  Choice     : 120     
+Atoms        : 3147    
+Bodies       : 15304   
+  Count      : 294     
+Equivalences : 9488     (Atom=Atom: 2065 Body=Body: 4288 Other: 3135)
+Tight        : Yes
+Variables    : 528      (Eliminated:   38 Frozen:  370)
+Constraints  : 7279     (Binary:   7.7% Ternary:  90.0% Other:   2.3%)
+
